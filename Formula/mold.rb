@@ -61,7 +61,10 @@ class Mold < Formula
 
   test do
     # Avoid use of the `llvm_clang` shim.
-    ENV.clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1200)
+    if OS.mac? && (DevelopmentTools.clang_build_version <= 1200)
+      ENV.clang
+      ENV.prepend_path "PATH", Formula["llvm"].opt_bin
+    end
 
     (testpath/"test.c").write <<~EOS
       int main(void) { return 0; }
@@ -83,6 +86,8 @@ class Mold < Formula
       cp_r pkgshare/"test", testpath
       # Remove some failing tests.
       untested = %w[headerpad* pagezero-size basic response-file]
+      homebrew_clang = Utils.safe_popen_read("clang", "--version").include?("Homebrew")
+      untested << "syslibroot" if homebrew_clang
       testpath.glob("test/macho/{#{untested.join(",")}}.sh").map(&:unlink)
       (testpath/"test/macho").children.each { |t| system t }
     else
