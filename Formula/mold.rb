@@ -51,9 +51,10 @@ class Mold < Formula
     args << "STRIP=true" if OS.mac?
     system "make", *args, "install"
 
-    inreplace buildpath.glob("test/*/*.sh") do |s|
-      s.gsub!(/^mold=.+?((?:ld64\.)?mold)"?$/, "mold=\"#{bin}/\\1\"")
-      s.gsub!(/"?\$mold"?-wrapper/, lib/"mold/mold-wrapper", false)
+    inreplace buildpath.glob("test/macho/*.sh"), "./ld64", bin/"ld64.mold", false
+    inreplace buildpath.glob("test/elf/*.sh") do |s|
+      s.gsub!(%r{(\.|`pwd`)/mold }, "#{bin}/mold ", false)
+      s.gsub!(%r{(`pwd`/)?mold-wrapper}, lib/"mold/mold-wrapper", false)
     end
     pkgshare.install "test"
   end
