@@ -1,11 +1,10 @@
 class Llvm < Formula
   desc "Next-gen compiler infrastructure"
   homepage "https://llvm.org/"
-  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-14.0.6/llvm-project-14.0.6.src.tar.xz"
-  sha256 "8b3cfd7bc695bd6cea0f37f53f0981f34f87496e79e2529874fd03a2f9dd3a8a"
+  url "https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-15.0.0-rc1.tar.gz"
+  sha256 "b026a1b32ba0dc5612da36f14977c7e9fb910d545251a26dcfefca85d94139e4"
   # The LLVM Project is under the Apache License v2.0 with LLVM Exceptions
   license "Apache-2.0" => { with: "LLVM-exception" }
-  revision 1
   head "https://github.com/llvm/llvm-project.git", branch: "main"
 
   livecheck do
@@ -211,7 +210,6 @@ class Llvm < Formula
 
       if OS.mac?
         extra_args << "-DLLVM_ENABLE_LIBCXX=ON"
-        extra_args << "-DDEFAULT_SYSROOT=#{macos_sdk}" if macos_sdk
       else
         # Make sure CMake doesn't try to pass C++-only flags to C compiler.
         extra_args << "-DCMAKE_C_COMPILER=#{ENV.cc}"
@@ -320,7 +318,7 @@ class Llvm < Formula
         # coverage. These do not need to succeed.
         begin
           system "cmake", "--build", ".", "--target", "check-clang", "check-llvm", "--", "--keep-going"
-        rescue RuntimeError
+        rescue BuildError
           nil
         end
       end
@@ -336,7 +334,7 @@ class Llvm < Formula
         # This build is for profiling, so it is safe to ignore errors.
         begin
           system "cmake", "--build", ".", "--", "--keep-going"
-        rescue RuntimeError
+        rescue BuildError
           nil
         end
       end
