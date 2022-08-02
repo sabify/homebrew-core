@@ -35,7 +35,6 @@ class Llvm < Formula
 
   uses_from_macos "libedit"
   uses_from_macos "libffi", since: :catalina
-  uses_from_macos "libxml2"
   uses_from_macos "ncurses"
   uses_from_macos "zlib"
 
@@ -145,6 +144,8 @@ class Llvm < Formula
     else
       ENV.append_to_cflags "-fpermissive -Wno-free-nonheap-object"
 
+      # Enabling libxml2 results in linkage with icu4c, which is awful.
+      args << "-DLLVM_ENABLE_LIBXML2=OFF"
       args << "-DLLVM_ENABLE_LIBCXX=OFF"
       args << "-DCLANG_DEFAULT_CXX_STDLIB=libstdc++"
       # Enable llvm gold plugin for LTO
