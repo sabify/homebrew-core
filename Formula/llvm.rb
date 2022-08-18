@@ -60,14 +60,17 @@ class Llvm < Formula
     ]
     runtimes = %w[
       compiler-rt
-      libcxx
-      libcxxabi
       libunwind
     ]
     if OS.mac?
       runtimes << "openmp"
     else
       projects << "openmp"
+
+      # Linking with these causes you subtle problems on macOS,
+      # since everything loads `/usr/lib/libc++.1.dylib`.
+      # https://github.com/Homebrew/homebrew-core/issues/96915
+      runtimes += %w[libcxx libcxxabi]
     end
 
     python_versions = Formula.names
@@ -511,22 +514,22 @@ class Llvm < Formula
       assert_equal "Hello World!", shell_output("./testXC").chomp
     end
 
-    # link against installed libc++
-    # related to https://github.com/Homebrew/legacy-homebrew/issues/47149
-    system "#{bin}/clang++", "-v",
-           "-isystem", "#{opt_include}/c++/v1",
-           "-std=c++11", "-stdlib=libc++", "test.cpp", "-o", "testlibc++",
-           "-rtlib=compiler-rt", "-L#{opt_lib}", "-Wl,-rpath,#{opt_lib}"
-    assert_includes (testpath/"testlibc++").dynamically_linked_libraries,
-                    (opt_lib/shared_library("libc++", "1")).to_s
-    (testpath/"testlibc++").dynamically_linked_libraries.each do |lib|
-      refute_match(/libstdc\+\+/, lib)
-      refute_match(/libgcc/, lib)
-      refute_match(/libatomic/, lib)
-    end
-    assert_equal "Hello World!", shell_output("./testlibc++").chomp
-
     if OS.linux?
+      # link against installed libc++
+      # related to https://github.com/Homebrew/legacy-homebrew/issues/47149
+      system "#{bin}/clang++", "-v",
+             "-isystem", "#{opt_include}/c++/v1",
+             "-std=c++11", "-stdlib=libc++", "test.cpp", "-o", "testlibc++",
+             "-rtlib=compiler-rt", "-L#{opt_lib}", "-Wl,-rpath,#{opt_lib}"
+      assert_includes (testpath/"testlibc++").dynamically_linked_libraries,
+                      (opt_lib/shared_library("libc++", "1")).to_s
+      (testpath/"testlibc++").dynamically_linked_libraries.each do |lib|
+        refute_match(/libstdc\+\+/, lib)
+        refute_match(/libgcc/, lib)
+        refute_match(/libatomic/, lib)
+      end
+      assert_equal "Hello World!", shell_output("./testlibc++").chomp
+
       # Link installed libc++, libc++abi, and libunwind archives both into
       # a position independent executable (PIE), as well as into a fully
       # position independent (PIC) DSO for things like plugins that export
