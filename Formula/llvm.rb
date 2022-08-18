@@ -1,8 +1,8 @@
 class Llvm < Formula
   desc "Next-gen compiler infrastructure"
   homepage "https://llvm.org/"
-  url "https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-15.0.0-rc1.tar.gz"
-  sha256 "b026a1b32ba0dc5612da36f14977c7e9fb910d545251a26dcfefca85d94139e4"
+  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.0-rc2/llvm-project-15.0.0rc2.src.tar.xz"
+  sha256 "00211c8789009610f592d3bbbd0f328d011c26935aabaa2628ec4d8c3cc9b647"
   # The LLVM Project is under the Apache License v2.0 with LLVM Exceptions
   license "Apache-2.0" => { with: "LLVM-exception" }
   head "https://github.com/llvm/llvm-project.git", branch: "main"
