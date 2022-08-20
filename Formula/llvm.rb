@@ -155,6 +155,8 @@ class Llvm < Formula
       args << "-DLLVM_ENABLE_LIBCXX=ON"
       args << "-DDEFAULT_SYSROOT=#{macos_sdk}" if macos_sdk
       runtimes_cmake_args << "-DCMAKE_INSTALL_RPATH=#{rpath}"
+      # Disable builds for OSes not supported by the CLT SDK.
+      builtins_cmake_args += %w[I WATCH TV].map { |os| "-DCOMPILER_RT_ENABLE_#{os}OS=OFF" }
     else
       ENV.append_to_cflags "-fpermissive -Wno-free-nonheap-object"
 
