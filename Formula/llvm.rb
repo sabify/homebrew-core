@@ -147,7 +147,8 @@ class Llvm < Formula
     builtins_cmake_args = []
 
     # Skip the PGO build on HEAD installs or non-bottle source builds
-    pgo_build = build.stable? && build.bottle?
+    # pgo_build = build.stable? && build.bottle?
+    pgo_build = false # deactivate while testing
 
     if OS.mac?
       args << "-DLLVM_BUILD_LLVM_C_DYLIB=ON"
