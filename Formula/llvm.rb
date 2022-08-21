@@ -80,8 +80,10 @@ class Llvm < Formula
       # Linking with these causes you subtle problems on macOS,
       # since everything loads `/usr/lib/libc++.1.dylib`.
       # https://github.com/Homebrew/homebrew-core/issues/96915
-      runtimes += %w[libcxx libcxxabi]
     end
+    # For comparison without this. See:
+    # https://github.com/Homebrew/homebrew-core/actions/runs/2897386665
+    runtimes += %w[libcxx libcxxabi]
 
     python_versions = Formula.names
                              .select { |name| name.start_with? "python@" }
