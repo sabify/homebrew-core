@@ -5,6 +5,7 @@ class Dpp < Formula
       tag:      "v0.4.10",
       revision: "40ab857b7159268800c72d3de6242c4568f5e177"
   license "BSL-1.0"
+  revision 1
 
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_monterey: "7d6c36df683ebeca1cd109cc8d92417ec4c3dae163ab1cd7ea295e3b4458d534"
