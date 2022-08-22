@@ -2,6 +2,7 @@ class Rtags < Formula
   desc "Source code cross-referencer like ctags with a clang frontend"
   homepage "https://github.com/Andersbakken/rtags"
   license "GPL-3.0-or-later"
+  revision 1
   head "https://github.com/Andersbakken/rtags.git", branch: "master"
 
   stable do
