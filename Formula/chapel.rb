@@ -4,7 +4,7 @@ class Chapel < Formula
   url "https://github.com/chapel-lang/chapel/releases/download/1.27.0/chapel-1.27.0.tar.gz"
   sha256 "558b1376fb7757a5e1f254c717953f598a3e89850c8edd1936b8d09c464f3e8b"
   license "Apache-2.0"
-  revision 2
+  revision 3
   head "https://github.com/chapel-lang/chapel.git", branch: "main"
 
   bottle do
