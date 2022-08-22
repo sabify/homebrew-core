@@ -4,6 +4,7 @@ class Pocl < Formula
   url "http://portablecl.org/downloads/pocl-3.0.tar.gz"
   sha256 "a3fd3889ef7854b90b8e4c7899c5de48b7494bf770e39fba5ad268a5cbcc719d"
   license "MIT"
+  revision 1
   head "https://github.com/pocl/pocl.git", branch: "master"
 
   bottle do
