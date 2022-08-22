@@ -4,6 +4,7 @@ class Enzyme < Formula
   url "https://github.com/EnzymeAD/Enzyme/archive/v0.0.36.tar.gz", using: :homebrew_curl
   sha256 "35661f1a9e00fe9417b512882bcf38e8ff1779a8fff9edeac24138a48548f8f8"
   license "Apache-2.0" => { with: "LLVM-exception" }
+  revision 1
   head "https://github.com/EnzymeAD/Enzyme.git", branch: "main"
 
   bottle do
