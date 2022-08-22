@@ -6,6 +6,7 @@ class Odin < Formula
       revision: "73beed0477936ee5b64b9b02f8fa7e399c623c8b"
   version "2022-08"
   license "BSD-3-Clause"
+  revision 1
   head "https://github.com/odin-lang/Odin.git", branch: "master"
 
   bottle do
