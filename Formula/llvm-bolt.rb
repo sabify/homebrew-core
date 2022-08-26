@@ -16,6 +16,8 @@ class LlvmBolt < Formula
   depends_on "llvm" => :test
   depends_on :linux
 
+  fails_with gcc: "5"
+
   def install
     args = %w[
       -DLLVM_TARGETS_TO_BUILD=X86
