@@ -10,9 +10,6 @@ class LlvmBolt < Formula
     url :stable
     regex(/^llvmorg[._-]v?(\d+(?:\.\d+)+)$/i)
   end
-  bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "e6b64382ae42ebcb47139791ca2a8628c18110f3d9cb27eed19ab963762d1ed2"
-  end
 
   depends_on "cmake" => :build
   depends_on "gcc" => :build
