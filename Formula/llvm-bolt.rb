@@ -13,8 +13,10 @@ class LlvmBolt < Formula
 
   depends_on "cmake" => :build
   depends_on "gcc" => :build
-  depends_on "llvm" => :test
+  depends_on "pkg-config" => :build
+  depends_on "llvm"
   depends_on :linux
+  depends_on "python@3.10"
 
   fails_with gcc: "5"
 
